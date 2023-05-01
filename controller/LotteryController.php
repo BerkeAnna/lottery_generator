@@ -2,15 +2,14 @@
 
 class LotteryController
 {
-    public function generate()
+    public function generate($numBalls, $maxNums)
     {
-        $numBalls = 6;
 
-        $lottery = new Lottery($numBalls);
+        $lottery = new Lottery($numBalls, $maxNums);
 
         $winningNumbers= $lottery->getWinningNumbers();
 
-        include 'view/Lottery.php';
+        return $winningNumbers;
     }
 
 }

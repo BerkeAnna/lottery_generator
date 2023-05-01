@@ -5,9 +5,9 @@ class Lottery
     private $winningNumbers = [];
 
 
-    public function __construct($numBalls)
+    public function __construct($numBalls, $maxNums)
     {
-        $numbers = range(1,50);
+        $numbers = range(1,$maxNums);
 
         shuffle($numbers);
 
