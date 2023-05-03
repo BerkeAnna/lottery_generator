@@ -12,4 +12,18 @@ class LotteryController
         return $winningNumbers;
     }
 
+    public function readEarlierDatas()
+    {
+        $csvFile = '../csvFile/otos.csv';
+        $handle = fopen($csvFile, 'r');
+
+        while(($data = fgetcsv($handle,1000,';')) != false){
+            foreach ($data as $value) {
+                echo $value . ' ';
+            }
+            echo "\n";
+        }
+        fclose($handle);
+    }
+
 }

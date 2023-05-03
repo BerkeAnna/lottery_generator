@@ -32,6 +32,7 @@ if (isset($_POST["submit"])) {
 $lottery = new LotteryController();
 $res = $lottery->generate($nums, $maxNums);
 $jackPotNums = $lottery->generate($jackpotTwoNums, 10);
+$data = $lottery->readEarlierDatas();
 ?>
 
     <h1>Winning Numbers</h1>
@@ -55,6 +56,7 @@ $jackPotNums = $lottery->generate($jackpotTwoNums, 10);
     <button onclick="window.location.href = '../view/index.php';">
         *** Generate new numbers ***
     </button>
+    $data
 </div>
 </body>
 </html>
