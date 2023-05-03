@@ -71,10 +71,10 @@ $numberLastOften=0;
     <button onclick="window.location.href = '../view/index.php';">
         *** Generate new numbers ***
     </button>
-<!--    adott hét $data[i], azok számai $data[i][0-4]-->
 <!--    $data[7] hetes szám: 198* fordult elő-->
     <!--    $data[49] hetes szám: 199* fordult elő-->
-<!--    --><?php //echo $data[49]; ?>
+<!--    A data visszaadja, hogy eddig hányszor húzták ki az "i".-dik számot. pl: data[1] az 1-es szám eddigi kihúzásainak száma-->
+<!--    --><?php //echo $data[1]; ?>
 </div>
 
 <?php for($i=1 ; $i<sizeof($data); $i++)
@@ -90,9 +90,41 @@ $numberLastOften=0;
 
 <div>
     todo:  a hatos, jPra megnézni, hogy ott jól generál
-    <h4>Legkevesebbszer kihúzott (<?php echo $drawnLastOften; ?>x) : <?php  echo $numberLastOften ?> </h4>
     <h4>Legtöbbször kihúzott (<?php echo $drawnMostOfTime; ?>x) : <?php  echo $numberMostOfTime ?></h4>
+    <h4>Legkevesebbszer kihúzott (<?php echo $drawnLastOften; ?>x) : <?php  echo $numberLastOften ?> </h4>
+    <h4>További legtöbbször kihúzott számok: </h4>
+    <div class="list">
+        <?php
 
+        rsort($sortedList);
+
+        for($i=1 ; $i<sizeof($data); $i++)
+        {
+            if($data[$i]==$sortedList[1] || $data[$i]==$sortedList[2] ||$data[$i]==$sortedList[3] || $data[$i]==$sortedList[4]
+                    || $data[$i]==$sortedList[5]){
+                echo $i . " (" .$data[$i] . "x)  </br>"  ;
+            }
+
+        }
+        ?>
+    </div>
+
+    <h4>További legkevesebbszer kihúzott számok: </h4>
+    <div class="list">
+        <?php
+
+        rsort($sortedList);
+
+        for($i=1 ; $i<sizeof($data); $i++)
+        {
+            if($data[$i]==$sortedList[88]  ||$data[$i]==$sortedList[87] || $data[$i]==$sortedList[86] || $data[$i]==$sortedList[85]
+                || $data[$i]==$sortedList[84]){
+                echo $i . " (" .$data[$i] . "x)  </br>"  ;
+            }
+
+        }
+        ?>
+    </div>
 
 </div>
 </body>
