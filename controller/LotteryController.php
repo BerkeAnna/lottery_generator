@@ -12,7 +12,7 @@ class LotteryController
         return $winningNumbers;
     }
 
-    public function readEarlierData($maxNum)
+    public function readEarlierData($maxNum, $column, $nums)
     {
         $filePath = __DIR__ . '/../csvFile/otos.csv'; // use an absolute file path
         $rows = [];
@@ -22,7 +22,7 @@ class LotteryController
 
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                $selectedColumns = array_slice($data, 11, 5);
+                $selectedColumns = array_slice($data, $column, $nums);
                 $rows[] = $selectedColumns;
             }
             fclose($handle);
@@ -44,9 +44,9 @@ class LotteryController
     }
 
     //the number of drawn -17260
-    public function count($maxNum)
+    public function count($maxNum,$column, $nums )
     {
-        $datas = $this->readEarlierData($maxNum);
+        $datas = $this->readEarlierData($maxNum,$column, $nums);
         $count=0;
         foreach ($datas as $data) {
             $count= $count + $data;
@@ -54,9 +54,9 @@ class LotteryController
         return $count;
     }
 
-    public function sortedList($maxNum)
+    public function sortedList($maxNum, $column, $nums)
     {
-        $datas = $this->readEarlierData($maxNum);
+        $datas = $this->readEarlierData($maxNum, $column, $nums);
 
          sort($datas);
 

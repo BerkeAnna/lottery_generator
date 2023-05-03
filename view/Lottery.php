@@ -13,18 +13,24 @@ require_once '../model/Lottery.php';
 $nums=0;
 $maxNums=0;
 $jackpotTwoNums=0;
+$name="";
 if (isset($_POST["submit"])) {
         $lottery = $_POST['lottery'];
         if($lottery== 'otos'){
             $nums=5;
             $maxNums = 90;
+            $name='otos';
+            $column=11;
         }elseif ($lottery == 'hatos'){
             $nums=6;
             $maxNums = 45;
+            $name='hatos';
+            $column=14;
         }elseif ($lottery == 'euroJackpot'){
             $nums=5;
             $maxNums = 50;
             $jackpotTwoNums =2;
+            $name='eurojackpot';
         }
 
 }
@@ -32,10 +38,10 @@ if (isset($_POST["submit"])) {
 $lottery = new LotteryController();
 $res = $lottery->generate($nums, $maxNums);
 $jackPotNums = $lottery->generate($jackpotTwoNums, 10);
-$data = $lottery->readEarlierData($maxNums);
-$count = $lottery->count($maxNums);
-$sortedList = $lottery->sortedList($maxNums);
-$drawnMostOfTime = $sortedList[89];
+$data = $lottery->readEarlierData($maxNums, $column,$nums);
+$count = $lottery->count($maxNums, $column,$nums);
+$sortedList = $lottery->sortedList($maxNums,$column,$nums);
+$drawnMostOfTime = $sortedList[$maxNums-1];
 $drawnLastOften = $sortedList[0];
 $fiveNumberMostOfTime = [$sortedList[0], $sortedList[1], $sortedList[2], $sortedList[3], $sortedList[4]];
 $numberMostOfTime=0;
@@ -60,11 +66,11 @@ $numberLastOften=0;
 
 <?php
 ?>
-    <ul>
-        <?php foreach ($jackPotNums as $number): ?>
-            <ol><?php echo $number; ?></ol> <?php echo $data[$number]; ?>
-        <?php endforeach; ?>
-    </ul>
+<!--    <ul>-->
+<!--        --><?php //foreach ($jackPotNums as $number): ?>
+<!--            <ol>--><?php //echo $number; ?><!--</ol> --><?php //echo $data[$number]; ?>
+<!--        --><?php //endforeach; ?>
+<!--    </ul>-->
 
 
 <div class="center">
@@ -89,7 +95,7 @@ $numberLastOften=0;
 ?>
 
 <div>
-    todo:  a hatos, jPra megnézni, hogy ott jól generál
+    todo:  a hatos, jPra megnézni, hogy ott jól generál, csak az 5-öshöz van csv, ezért kapom ugyanazt xd
     <h4>Legtöbbször kihúzott (<?php echo $drawnMostOfTime; ?>x) : <?php  echo $numberMostOfTime ?></h4>
     <h4>Legkevesebbszer kihúzott (<?php echo $drawnLastOften; ?>x) : <?php  echo $numberLastOften ?> </h4>
     <h4>További legtöbbször kihúzott számok: </h4>
@@ -117,8 +123,8 @@ $numberLastOften=0;
 
         for($i=1 ; $i<sizeof($data); $i++)
         {
-            if($data[$i]==$sortedList[88]  ||$data[$i]==$sortedList[87] || $data[$i]==$sortedList[86] || $data[$i]==$sortedList[85]
-                || $data[$i]==$sortedList[84]){
+            if($data[$i]==$sortedList[$maxNums-2] || $data[$i]==$sortedList[$maxNums-3]
+                || $data[$i]==$sortedList[$maxNums-4] || $data[$i]==$sortedList[$maxNums-5] || $data[$i]==$sortedList[$maxNums-6] ){
                 echo $i . " (" .$data[$i] . "x)  </br>"  ;
             }
 
