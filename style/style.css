@@ -29,6 +29,23 @@ ol{
     font-weight: bolder;
 }
 
+table{
+    text-align: center;
+    border: 3px solid #035003;
+    margin: auto;
+}
+th{
+    font-weight: bolder;
+    border: 1px solid #2da63d;
+}
+td{
+    border: 1px solid #2da63d;
+}
+
+.numbers{
+    background-color: #61ab6e;
+}
+
 .center{
     text-align: center;
 }

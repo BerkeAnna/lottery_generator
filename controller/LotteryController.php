@@ -12,18 +12,56 @@ class LotteryController
         return $winningNumbers;
     }
 
-    public function readEarlierDatas()
+    public function readEarlierData($maxNum)
     {
-        $csvFile = '../csvFile/otos.csv';
-        $handle = fopen($csvFile, 'r');
+        $filePath = __DIR__ . '/../csvFile/otos.csv'; // use an absolute file path
+        $rows = [];
+        $numbers = range(1, $maxNum);
+        $occurrences = array_fill(1, $maxNum, 0);
+        $count=0;
 
-        while(($data = fgetcsv($handle,1000,';')) != false){
-            foreach ($data as $value) {
-                echo $value . ' ';
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                $selectedColumns = array_slice($data, 11, 5);
+                $rows[] = $selectedColumns;
             }
-            echo "\n";
+            fclose($handle);
         }
-        fclose($handle);
+        $list = array_map('implode', array_fill(0, count($rows), ','), $rows);
+
+        foreach ($rows as $row) {
+            foreach ($row as $number) {
+                $number = (int) $number;
+                if ($number >= 1 && $number <= $maxNum) {
+                    $occurrences[$number]++;
+                    $count++;
+                }
+            }
+
+        }
+
+        return $occurrences;
     }
+
+    //the number of drawn -17260
+    public function count($maxNum)
+    {
+        $datas = $this->readEarlierData($maxNum);
+        $count=0;
+        foreach ($datas as $data) {
+            $count= $count + $data;
+        }
+        return $count;
+    }
+
+    public function sortedList($maxNum)
+    {
+        $datas = $this->readEarlierData($maxNum);
+
+         sort($datas);
+
+        return $datas;
+    }
+
 
 }
